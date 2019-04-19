@@ -5,7 +5,7 @@
  * @license   GNU General Public License version 3, or later
  */
 
-namespace Akeeba\SocialLogin\Twitch;
+namespace Akeeba\SocialLogin\Discord;
 
 use Akeeba\SocialLogin\Library\OAuth\OAuth2Client;
 use Joomla\CMS\Application\CMSApplication;
@@ -16,7 +16,7 @@ use Joomla\Input\Input;
 defined('_JEXEC') or die();
 
 /**
- * Twitch Account OAuth client.
+ * Discord Account OAuth client.
  */
 class OAuth extends OAuth2Client
 {
@@ -40,17 +40,17 @@ class OAuth extends OAuth2Client
 		// Setup the authentication and token urls if not already set.
 		if (!isset($this->options['authurl']))
 		{
-			$this->options['authurl'] = 'https://api.twitch.tv/kraken/oauth2/authorize';
+			$this->options['authurl'] = 'https://discordapp.com/api/oauth2/authorize';
 		}
 
 		if (!isset($this->options['tokenurl']))
 		{
-			$this->options['tokenurl'] = 'https://api.twitch.tv/kraken/oauth2/token';
+			$this->options['tokenurl'] = 'https://discordapp.com/api/oauth2/token';
 		}
 
 		if (!isset($this->options['scope']))
 		{
-			$this->options['scope'] = 'user_read';
+			$this->options['scope'] = 'identify email';
 		}
 
 		// Call the \Joomla\OAuth2\Client constructor to setup the object.

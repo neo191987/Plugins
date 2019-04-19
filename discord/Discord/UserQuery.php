@@ -5,7 +5,7 @@
  * @license   GNU General Public License version 3, or later
  */
 
-namespace Akeeba\SocialLogin\Twitch;
+namespace Akeeba\SocialLogin\Discord;
 
 // Protect from unauthorized access
 defined('_JEXEC') or die();
@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Http\Http;
 
 /**
- * Implements a query to the currently logged in user through Twitch REST API
+ * Implements a query to the currently logged in user through Discord REST API
  */
 class UserQuery
 {
@@ -31,7 +31,7 @@ class UserQuery
 	 */
 	protected $token;
 
-	private static $endpoint = 'https://api.twitch.tv/kraken/';
+	private static $endpoint = 'https://discordapp.com/api/';
 
 	/**
 	 * Constructor.
@@ -47,18 +47,21 @@ class UserQuery
 
 	/**
 	 * Get information about the currently logged in user. The information returned is:
-	 * id           The Twitch user ID.
-	 * login        The Twitch username.
-	 * name         The full, real name of the Twitch user.
-	 * email        The Twitch user's email. May be empty.
+	 * id           The Discord user ID.
+	 * login        The Discord username.
+	 * name         The full, real name of the Discord user.
+	 * email        The Discord user's email. May be empty.
 	 * avatarUrl    The URL to the 256px wide avatar of the user.
 	 *
 	 * @return  \stdClass  See above.
 	 */
 	public function getUserInformation()
 	{
-		$path  = 'user?oauth_token=' . urlencode($this->token);
-		$reply = $this->client->get(self::$endpoint . $path, array());
+		$headers  = array(
+			'Authorization' => 'Bearer ' . $this->token
+		);
+		$path = 'users/@me';
+		$reply    = $this->client->get(self::$endpoint . $path, $headers);
 
 		if ($reply->code > 299)
 		{
